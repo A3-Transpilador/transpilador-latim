@@ -1,0 +1,53 @@
+?start: programa
+
+programa: "principium" bloco "finis"
+
+bloco: (comando)*
+
+?comando: declaracao
+        | atribuicao
+        | cmd_leitura
+        | cmd_escrita
+        | cmd_if
+        | cmd_while
+        | cmd_for
+
+declaracao: TIPO ID ("," ID)* "."
+TIPO: "numerus" | "decimalis" | "textus" | "veritas"
+
+atribuicao: ID "=" expr "."
+
+cmd_leitura: "lege" "(" ID ")" "."
+cmd_escrita: "scribe" "(" expr ")" "."
+
+cmd_if: "si" "(" expr_relacional ")" "{" bloco "}" ("aliter" "{" bloco "}")?
+
+cmd_while: "dum" "(" expr_relacional ")" "{" bloco "}"
+
+cmd_for: "pro" "(" ID "=" expr "usque" expr ")" "{" bloco "}"
+
+expr_relacional: expr OP_REL expr
+OP_REL: "==" | "!=" | "<" | ">" | "<=" | ">="
+
+?expr: termo (OP_SOMA termo)*
+?termo: fator (OP_MULT fator)*
+
+?fator: INT -> numero_inteiro
+      | FLOAT -> numero_decimal
+      | STRING -> texto
+      | BOOLEANO -> booleano
+      | ID -> variavel
+      | "(" expr ")"
+
+OP_SOMA: "+" | "-"
+OP_MULT: "*" | "/"
+
+BOOLEANO: "verum" | "falsum"
+ID: /[a-zA-Z_][a-zA-Z0-9_]*/
+STRING: /"([^"\\]|\\.)*"/ | /'([^'\\]|\\.)*'/
+
+%import common.INT
+%import common.FLOAT
+%import common.WS
+%ignore WS
+%ignore /\s+/
