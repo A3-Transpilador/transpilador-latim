@@ -13,8 +13,11 @@ class LatinTransformer(Transformer):
 
     def declaracao(self, items):
         tipo = str(items[0])
-        ids = [str(i) for i in items[1:]]
-        return Declaracao(tipo, ids)
+        ids = items[1]
+        return Declaracao(tipo=tipo, ids=ids)
+    
+    def id_list(self, items):
+        return [str(i) for i in items]
 
     def atribuicao(self, items):
         return Atribuicao(str(items[0]), items[1])

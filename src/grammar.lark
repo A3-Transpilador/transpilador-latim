@@ -12,7 +12,8 @@ bloco: (comando)*
         | cmd_while
         | cmd_for
 
-declaracao: ("numerus" | "decimalis" | "textus" | "veritas") id_list "."
+declaracao: TIPO id_list "."
+TIPO.2: "numerus" | "decimalis" | "textus" | "veritas"
 id_list: ID ("," ID)*
 
 atribuicao: ID "=" expr "."
