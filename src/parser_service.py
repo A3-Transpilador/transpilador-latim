@@ -38,7 +38,10 @@ class LatinTransformer(Transformer):
         return ForStmt(str(items[0]), items[1], items[2], items[3])
 
     def expr_relacional(self, items):
-        return BinOp(items[0], str(items[1]), items[2])
+        if len(items) == 1:
+            return items[0]
+        else:
+            return BinOp(items[0], str(items[1]), items[2])
 
     def OP_SOMA(self, token): return str(token)
     def OP_MULT(self, token): return str(token)
