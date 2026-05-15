@@ -39,7 +39,12 @@ class LatinTransformer(Transformer):
 
     def cmd_for(self, items):
         return ForStmt(str(items[0]), items[1], items[2], items[3])
-
+   
+    def cmd_do_while(self, items):
+        bloco = items[0]
+        condicao = items[1]
+        return DoWhileStmt(bloco=bloco, condicao=condicao)   
+    
     def expr_relacional(self, items):
         if len(items) == 1:
             return items[0]
@@ -50,11 +55,12 @@ class LatinTransformer(Transformer):
     def OP_MULT(self, token): return str(token)
     
     def expr(self, items):
-        res = items[0]
-        for i in range(1, len(items), 2):
-            res = BinOp(res, str(items[i]), items[i+1])
-        return res
-
+       if len(items) == 1:
+           return items[0] # Se for só um número/variável, já deve ser um objeto
+       res = items[0]
+       for i in range(1, len(items), 2):
+           res = BinOp(res, str(items[i]), items[i+1])
+       return res
     def termo(self, items):
         res = items[0]
         for i in range(1, len(items), 2):
@@ -72,11 +78,19 @@ class LatinTransformer(Transformer):
         return Literal(val)
 
     def booleano(self, items):
-        val = str(items[0]).lower() == "verum"
-        return Literal(val)
+      token = items[0] if isinstance(items, list) else items
+      token_str = str(token).strip()
+      val = True if token_str == "verum" else False
+      return Literal(valor=val)
 
     def variavel(self, items):
         return Variavel(str(items[0]))
+    
+    def nulo(self, items):
+        return Literal(None)
+
+    def lista(self, items):
+        return Literal([item for item in items])
 
 def get_parser():
     with open("src/grammar.lark", "r") as f:

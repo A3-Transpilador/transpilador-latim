@@ -1,19 +1,58 @@
 principium
-numerus a, b.
-textus nome.
-scribe("Digite seu nome: ").
-lege(nome).
-a = 10.
-b = 5 + 2 * 3.
-si (b > a) {
-    scribe(nome).
-    scribe(" Venceu!").
-} aliter {
-    dum (a > 0) {
-        a = a - 1.
-    }
-}
-pro (contador = 0 usque 5) {
+  // 1. Declaração dos 4 tipos obrigatórios + os novos (inanis e collectio)
+  numerus contador, limite.
+  decimalis media.
+  textus mensagem, nome.
+  veritas executando.
+  inanis vazio.
+  collectio lista_notas.
+  
+  // 2. Atribuições e Comandos de I/O
+  mensagem = "Iniciando sistema de notas...".
+  scribe(mensagem).
+  
+  scribe("Digite seu nome: ").
+  lege(nome).
+  
+  limite = 3.
+  executando = verum.
+  vazio = nihil.
+  lista_notas = [7, 8, 10].
+
+  // 3. Teste de Precedência Matemática (A Regra de Ouro)
+  // Resultado esperado: 5 + (2 * 3) = 11, e não (5 + 2) * 3 = 21
+  media = 5 + 2 * 3.
+  scribe("Resultado da conta (esperado 11): ").
+  scribe(media).
+
+  // 4. Estrutura de Controle (si / aliter)
+  si (media >= 10) {
+    scribe("Media excelente!").
+  } aliter {
+    scribe("Media dentro do esperado.").
+  }
+
+  // 5. Estrutura de Repetição 1: pro (For)
+  scribe("Contagem progressiva:").
+  pro (contador = 1 usque limite) {
     scribe(contador).
-}
+  }
+
+  // 6. Estrutura de Repetição 2: dum (While)
+  scribe("Contagem regressiva:").
+  dum (limite > 0) {
+    scribe(limite).
+    limite = limite - 1.
+  }
+
+  // 7. Estrutura de Repetição 3: fac-dum (Do-While)
+  // Garante a execução de pelo menos uma vez
+  scribe("Teste do-while:").
+  fac {
+    scribe("Executou pelo menos uma vez!").
+    executando = falsum.
+  } dum (executando == verum).
+
+  scribe("Fim do programa, ").
+  scribe(nome).
 finis

@@ -1,5 +1,6 @@
 import sys
 from src.parser_service import get_parser
+from src.semantic_service import SemanticAnalyzer, SemanticError # IMPORTANTE
 from src.generator_service import PythonGenerator
 
 def main():
@@ -15,12 +16,24 @@ def main():
     except FileNotFoundError:
         print(f"Erro: Arquivo '{input_file}' não encontrado.")
         return
-
-    parser = get_parser()
     
+    parser = get_parser()
+    # 1. Análise Sintática (Lark)
     print("Realizando análise sintática...")
+    parser = get_parser()
     ast = parser.parse(source_code.lower())
-
+     
+    # 2. Análise Semântica
+    print("Validando regras semânticas...")
+    try:
+        analyzer = SemanticAnalyzer()
+        analyzer.validar(ast)
+        print("Análise semântica concluída com sucesso! Sem erros detectados.")
+    except SemanticError as err:
+        print(f"\n[ERRO DE COMPILAÇÃO] {err}")
+        sys.exit(1)
+        
+    # 3. Geração de Código
     print("Traduzindo para Python...")
     generator = PythonGenerator()
     python_code = generator.generate(ast)

@@ -68,5 +68,9 @@ class ForStmt(Comando):
     bloco: Bloco
 
 @dataclass
+class DoWhileStmt(Comando):
+    bloco: Bloco
+    condicao: Expressao
+@dataclass
 class Programa(BaseAST):
     bloco: Bloco
