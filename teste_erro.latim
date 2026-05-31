@@ -1,0 +1,8 @@
+principium
+  numerus x.
+  x = 10.
+  // Teste 1: Usar variável não declarada
+  y = 5. 
+  // Teste 2: Atribuir texto a número
+  x = "erro".
+finis

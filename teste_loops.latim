@@ -1,0 +1,18 @@
+principium
+  numerus i, limite.
+  limite = 3.
+  scribe("--- Teste PRO (1 a 3) ---").
+  pro (i = 1 usque limite) {
+    scribe(i).
+  }
+  scribe("--- Teste DUM (3 a 1) ---").
+  i = 3.
+  dum (i > 0) {
+    scribe(i).
+    i = i - 1.
+  }
+  scribe("--- Teste FAC-DUM (Uma vez) ---").
+  fac {
+    scribe("Executou o fac!").
+  } dum (falsum).
+finis

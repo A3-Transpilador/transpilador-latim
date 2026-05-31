@@ -32,7 +32,7 @@ cmd_for: "pro" "(" ID "=" expr "usque" expr ")" "{" bloco "}"
 cmd_do_while: "fac" "{" bloco "}" "dum" "(" expr_relacional ")" "."
 
 
-expr_relacional: expr OP_REL expr | BOOLEANO
+expr_relacional: expr OP_REL expr | BOOLEANO -> booleano
 OP_REL: "==" | "!=" | "<" | ">" | "<=" | ">="
 
 ?expr: termo (OP_SOMA termo)*

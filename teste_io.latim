@@ -1,0 +1,19 @@
+principium
+  numerus idade.
+  decimalis altura.
+  textus nome.
+  veritas estudante.
+  scribe("Digite seu nome: ").
+  lege(nome).
+  scribe("Digite sua idade: ").
+  lege(idade).
+  scribe("Digite sua altura (ex: 1.75): ").
+  lege(altura).
+  
+  scribe("Nome: ").
+  scribe(nome).
+  scribe("Idade em 5 anos sera: ").
+  scribe(idade + 5).
+  scribe("Altura dobrada: ").
+  scribe(altura * 2).
+finis

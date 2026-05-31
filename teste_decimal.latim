@@ -1,0 +1,8 @@
+principium
+    decimalis preco, total.
+    scribe("Qual o preco? ").
+    lege(preco).
+    total = preco * 1.1.
+    scribe("Preco com 10% de taxa: ").
+    scribe(total).
+finis

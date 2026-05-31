@@ -1,6 +1,6 @@
 from src.models import (
     Programa, Bloco, Declaracao, Atribuicao, Leitura, 
-    Escrita, IfStmt, WhileStmt, ForStmt, BinOp, Literal, Variavel
+    Escrita, IfStmt, WhileStmt, ForStmt, BinOp, Literal, Variavel, DoWhileStmt
 )
 
 class SemanticError(Exception):
@@ -61,7 +61,9 @@ class SemanticAnalyzer:
 
     def visit_IfStmt(self, node: IfStmt):
         # Valida a expressão lógica/relacional do si (...)
-        self.validar(node.condicao)
+        tipo_condicao = self.validar(node.condicao)
+        if tipo_condicao != "veritas":
+            raise SemanticError(f"Erro Semântico: Condição do comando si() deve ser do tipo 'veritas', mas recebeu '{tipo_condicao}'.")
         # Valida os blocos internos
         self.validar(node.bloco_entao)
         if node.bloco_aliter:
@@ -69,7 +71,9 @@ class SemanticAnalyzer:
 
     def visit_WhileStmt(self, node: WhileStmt):
         # Valida a expressão lógica/relacional do dum (...)
-        self.validar(node.condicao)
+        tipo_condicao = self.validar(node.condicao)
+        if tipo_condicao != "veritas":
+            raise SemanticError(f"Erro Semântico: Condição do comando dum() deve ser do tipo 'veritas', mas recebeu '{tipo_condicao}'.")
         self.validar(node.bloco)
 
     def visit_ForStmt(self, node: ForStmt):

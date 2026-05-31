@@ -1,0 +1,10 @@
+principium
+  numerus nota.
+  scribe("Digite a sua nota para saber se foi aprovado ou reprovado (média 6): ").
+  lege(nota).
+  si (nota >= 6) {
+    scribe("Aprovado").
+  } aliter {
+    scribe("Reprovado").
+  }
+finis

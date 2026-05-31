@@ -11,7 +11,7 @@ class Expressao(BaseAST):
 
 @dataclass
 class Literal(Expressao):
-    valor: Union[int, float, str, bool]
+    valor: Union[int, float, str, bool, list, None]
 
 @dataclass
 class Variavel(Expressao):

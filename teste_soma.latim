@@ -1,0 +1,10 @@
+principium
+    numerus x, y, soma.
+    scribe("Digite o primeiro numero: ").
+    lege(x).
+    scribe("Digite o segundo numero: ").
+    lege(y).
+    soma = x + y.
+    scribe("A soma é: ").
+    scribe(soma).
+finis

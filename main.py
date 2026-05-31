@@ -35,7 +35,7 @@ def main():
         
     # 3. Geração de Código
     print("Traduzindo para Python...")
-    generator = PythonGenerator()
+    generator = PythonGenerator(analyzer.tabela_simbolos)
     python_code = generator.generate(ast)
 
     output_file = "saida.py"

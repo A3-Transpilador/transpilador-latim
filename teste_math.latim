@@ -1,0 +1,10 @@
+principium
+  decimalis res1, res2.
+  res1 = 10 + 5 * 2.
+  res2 = 10 / 2 - 3.
+  
+  scribe("Resultado 1 (Esperado 20): ").
+  scribe(res1).
+  scribe("Resultado 2 (Esperado 2): ").
+  scribe(res2).
+finis
