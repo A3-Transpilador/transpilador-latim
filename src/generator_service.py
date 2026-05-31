@@ -46,10 +46,17 @@ class PythonGenerator:
 
     def visit_Leitura(self, node: Leitura):
         tipo = self.tabela_simbolos.get(node.id, "textus")
-        if tipo == "numerus":
-            return f"{node.id} = int(input())"
-        elif tipo == "decimalis":
-            return f"{node.id} = float(input())"
+        if tipo in ["numerus", "decimalis"]:
+            func = "int" if tipo == "numerus" else "float"
+            label = "inteiro" if tipo == "numerus" else "decimal"
+
+            return (
+                f"try:\n"
+                f"{self._indent()}    {node.id} = {func}(input())\n"
+                f"{self._indent()}except ValueError:\n"
+                f"{self._indent()}    print(f'\\n[Erro de Execucao] O valor digitado para \"{node.id}\" nao é um {label} valido.')\n"
+                f"{self._indent()}    exit(1)"
+            )
         elif tipo == "veritas":
             return f"{node.id} = input().strip().lower() == 'verum'"
         # Converte 'lege' para 'input'
