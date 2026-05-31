@@ -1,25 +1,111 @@
 # Transpilador Latim-Python
-Módulo de Lexer e Parser.
+
+Este projeto é um transpilador completo que converte programas escritos em uma linguagem de programação personalizada baseada em **Latim** para **Python**. O sistema realiza todas as etapas clássicas de compilação: análise léxica, sintática, semântica e geração de código.
+
+## Requisitos Mínimos Atendidos
+
+Conforme o enunciado, este projeto implementa:
+- **4+ Tipos de dados:** Inteiro (`numerus`), Decimal (`decimalis`), String (`textus`), Booleano (`veritas`), Nulo (`inanis`) e Lista (`collectio`).
+- **Estrutura de Controle:** `si ... aliter` (equivalente ao `if ... else`).
+- **Estruturas de Repetição:** `while` (`dum`), `for` (`pro ... usque`) e `do ... while` (`fac ... dum`).
+- **Precedência Matemática:** Gramática estruturada para respeitar a ordem das operações (+, -, *, /).
+- **Atribuições e Escopo:** Validação de tipos e verificação de variáveis declaradas.
+- **Entrada e Saída:** Comandos `lege` (input) e `scribe` (print).
+- **Números Decimais:** Suporte completo a tipos de ponto flutuante.
+
+---
 
 ## Arquitetura do Sistema
-O transpilador segue as fases clássicas de um compilador:
-1.  **Análise Léxica (Lexer):** Implementada via biblioteca **Lark**, responsável por transformar o texto em tokens.
-2.  **Análise Sintática (Parser):** Define as regras gramaticais e gera a Árvore de Sintaxe Abstrata (AST).
-3.  **Análise Semântica:** Valida a tabela de símbolos e a compatibilidade de tipos de dados.
-4.  **Geração de Código:** Traduz a AST para código Python respeitando a indentação por blocos.
 
-| Instrução Latim | Equivalente Python | Descrição / Função |
+O transpilador foi desenvolvido em Python utilizando a biblioteca **Lark** para o processamento da gramática.
+
+1.  **Análise Léxica e Sintática (`src/grammar.lark`):** Define os tokens e a estrutura da gramática (LALR).
+2.  **Modelagem (`src/models.py`):** Define os nós da Árvore de Sintaxe Abstrata (AST).
+3.  **Transformação (`src/parser_service.py`):** Converte o parse tree do Lark para a nossa AST customizada.
+4.  **Análise Semântica (`src/semantic_service.py`):**
+    - Verifica se variáveis foram declaradas antes do uso.
+    - Valida compatibilidade de tipos em operações e atribuições.
+    - Garante que condições de loops e `if` sejam booleanas.
+5.  **Geração de Código (`src/generator_service.py`):**
+    - Traduz a AST para código Python 3.
+    - Implementa **Casting Automático** no `input()` baseado no tipo da variável.
+    - Garante a **Inclusividade** no loop `pro` (até o limite final).
+    - Formata a saída de decimais para evitar ruído matemático.
+    - Otimiza a interface de prompt (texto do `scribe` na mesma linha do `lege`).
+
+---
+
+## Especificação da Linguagem (Latim)
+
+### Palavras Reservadas e Tipos
+| Latim | Python | Descrição |
 | :--- | :--- | :--- |
-| `principium` | (Início do Arquivo) | Delimitador de início do programa. |
-| `finis` | (Fim do Arquivo) | Delimitador de encerramento do programa. |
-| `numerus` | `int` | Tipo de dado para números inteiros. |
-| `decimalis` | `float` | Tipo de dado para números reais (ponto flutuante). |
-| `textus` | `str` | Tipo de dado para cadeias de caracteres (strings). |
-| `veritas` | `bool` | Tipo de dado para valores lógicos (verdadeiro/falso). |
-| `scribe(expr).` | `print(expr)` | Comando de saída de dados no terminal. |
-| `lege(id).` | `id = input()` | Comando de entrada de dados via teclado. |
-| `si (cond) { ... }` | `if cond:` | Estrutura de controle condicional. |
-| `aliter { ... }` | `else:` | Bloco alternativo para o comando `si`. |
-| `dum (cond) { ... }` | `while cond:` | Estrutura de repetição condicional. |
-| `pro (i=0 usque 5)` | `for i in range(0, 5):` | Estrutura de repetição com intervalo definido. |
-| `a = 10.` | `a = 10` | Atribuição de valores com encerramento por ponto. |
+| `numerus` | `int` | Inteiro |
+| `decimalis` | `float` | Decimal |
+| `textus` | `str` | String |
+| `veritas` | `bool` | Booleano (`verum` / `falsum`) |
+| `inanis` | `NoneType` | Nulo (`nihil`) |
+| `collectio` | `list` | Lista |
+
+### Comandos e Estruturas
+| Latim | Exemplo |
+| :--- | :--- |
+| **Início/Fim** | `principium` ... `finis` |
+| **Saída** | `scribe("Olá").` |
+| **Entrada** | `lege(nome).` |
+| **Condicional** | `si (x > 0) { ... } aliter { ... }` |
+| **Loop For** | `pro (i = 1 usque 10) { ... }` |
+| **Loop While** | `dum (condicao) { ... }` |
+| **Loop Do-While** | `fac { ... } dum (condicao).` |
+
+---
+
+## Instalação e Uso
+
+### 1. Preparar o Ambiente
+Recomendamos o uso de um ambiente virtual:
+```bash
+# Criar e ativar o ambiente virtual
+python3 -m venv venv
+source venv/bin/activate
+
+# Instalar dependências
+pip install -r requirements.txt
+```
+
+### 2. Compilar um Programa
+Para transpilar um arquivo `.latim` para Python:
+```bash
+python3 main.py programa.latim
+```
+Isso gerará um arquivo chamado `saida.py`.
+
+### 3. Executar o Programa Gerado
+```bash
+python3 saida.py
+```
+
+---
+
+## Bateria de Testes
+
+O projeto inclui diversos testes para validar os requisitos:
+- `programa.latim`: Demonstração geral das funcionalidades.
+- `teste_math.latim`: Valida precedência de operadores.
+- `teste_loops.latim`: Valida todas as estruturas de repetição.
+- `teste_io.latim`: Valida entrada/saída com casting de tipos.
+
+Para rodar os testes automatizados do Parser:
+```bash
+pytest tests/test_parser.py
+```
+
+---
+
+## 👥 Desenvolvedores
+*   Gabriel Almeida
+*   Rafael Rangel
+*   Vitor Pio
+
+---
+*Projeto desenvolvido para a disciplina de Compiladores.*

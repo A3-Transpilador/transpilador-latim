@@ -98,7 +98,7 @@ class SemanticAnalyzer:
         
         tipo_condicao = self.validar(node.condicao)
         if tipo_condicao != "veritas":
-            print(f"Aviso Semântico: Condição do do-while deveria ser veritas, recebeu {tipo_condicao}")
+            raise SemanticError(f"Erro Semântico: Condição do comando fac-dum() deve ser do tipo 'veritas', mas recebeu '{tipo_condicao}'.")
   
     def visit_BinOp(self, node: BinOp):
         # Valida recursivamente o lado esquerdo e o lado direito da operação matemática/relacional
