@@ -73,14 +73,28 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Compilar um Programa
-Para transpilar um arquivo `.latim` para Python:
+> **Nota para Linux (Ubuntu/Debian ou WSL)**: A interface gráfica (IDE) utiliza a biblioteca `Tkinter`. Se você receber um erro de módulo não encontrado, instale-a via gerenciador de pacotes:
+> ```bash
+> sudo apt-get update && sudo apt-get install -y python3-tk
+> ```
+
+### 2. Forma 1: Executar via Interface Gráfica (IDE Desktop)
+A forma mais fácil e interativa de digitar, compilar e rodar programas em Latim é usando a nossa IDE nativa:
+```bash
+python3 gui.py
+```
+Isso abrirá uma janela com editor de código (modo escuro, números de linha, realce de sintaxe básico), console integrado e visualizador do código Python gerado em tempo real. Entradas (`lege`) são solicitadas através de caixas de diálogo interativas modernas.
+
+### 3. Forma 2: Executar via Linha de Comando (CLI)
+Você também pode compilar e executar o código diretamente pelo terminal clássico de comandos:
+
+#### Passo A: Compilar o arquivo `.latim`
 ```bash
 python3 main.py programa.latim
 ```
-Isso gerará um arquivo chamado `saida.py`.
+Isso gerará o arquivo traduzido `saida.py`.
 
-### 3. Executar o Programa Gerado
+#### Passo B: Executar o programa gerado
 ```bash
 python3 saida.py
 ```

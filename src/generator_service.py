@@ -52,15 +52,16 @@ class PythonGenerator:
 
             return (
                 f"try:\n"
-                f"{self._indent()}    {node.id} = {func}(input())\n"
+                f"{self._indent()}    {node.id} = {func}(input('Digite o valor ({label}) para \"{node.id}\": '))\n"
                 f"{self._indent()}except ValueError:\n"
                 f"{self._indent()}    print(f'\\n[Erro de Execucao] O valor digitado para \"{node.id}\" nao é um {label} valido.')\n"
                 f"{self._indent()}    exit(1)"
             )
         elif tipo == "veritas":
-            return f"{node.id} = input().strip().lower() == 'verum'"
+            return f"{node.id} = input('Digite o valor (veritas) para \"{node.id}\": ').strip().lower() == 'verum'"
+        
         # Converte 'lege' para 'input'
-        return f"{node.id} = input()"
+        return f"{node.id} = input('Digite o valor (textus) para \"{node.id}\": ')"
 
     def visit_Escrita(self, node: Escrita):
         # Converte 'scribe' para 'print'
