@@ -122,4 +122,4 @@ pytest tests/test_parser.py
 *   Vitor Pio
 
 ---
-*Projeto desenvolvido para a disciplina de Compiladores.*
+*Projeto desenvolvido para a disciplina de Teoria da Computação e Compiladores.*
