@@ -116,10 +116,10 @@ pytest tests/test_parser.py
 
 ---
 
-## 👥 Desenvolvedores
-*   Gabriel Almeida
-*   Rafael Rangel
-*   Vitor Pio
+## Desenvolvedores
+*   Gabriel Almeida Passos Souza - 12723112569
+*   Rafael Silva Rangel de Almeida - 1272412932
+*   Vitor Pio VIeira - 12725238440 
 
 ---
 *Projeto desenvolvido para a disciplina de Teoria da Computação e Compiladores.*
